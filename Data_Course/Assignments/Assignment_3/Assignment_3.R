@@ -148,6 +148,9 @@ cummax(vector1)
 # even has built-in statistical distributions (we will see more of these later)
 dbinom(50,100,.5) # probability of getting exactly 50 heads out of 100 coin flips
 
+
+
+
 # YOUR REMAINING HOMEWORK ASSIGNMENT (Fill in with code) ####
 
 # 1. Get a subset of the "iris" data frame where it's just even-numbered rows
@@ -173,4 +176,3 @@ big_area_iris <- subset(iris, Sepal.Area > 20)
 # I should be able to run your R script and get all the right objects generated
 
 
- 
