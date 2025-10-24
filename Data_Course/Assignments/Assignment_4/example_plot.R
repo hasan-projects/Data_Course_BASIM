@@ -16,3 +16,4 @@ ggplot(smoke_data, aes(x = Year, y = Smoking_Prevalence, color = Campaign)) +
     color = "Campaign Active?"
   ) +
   theme_minimal(base_size = 14)
+
