@@ -174,5 +174,5 @@ big_area_iris <- subset(iris, Sepal.Area > 20)
 # 6. Upload the last numbered section of this R script (with all answers filled in and tasks completed) to Canvas
 
 # I should be able to run your R script and get all the right objects generated
-
+ 
 

@@ -10,4 +10,4 @@ write.csv(fake_data, "fake_smoking_data.csv", row.names = FALSE)
 
 
 read.csv("fake_smoking_data.csv")
- 
+  
