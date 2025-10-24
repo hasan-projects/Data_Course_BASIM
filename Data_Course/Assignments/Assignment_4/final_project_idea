@@ -1,0 +1,30 @@
+Title: The Impact of U.S. Anti-Smoking Campaigns on Smoking Rates
+
+For my final data analysis project, I want to explore whether major anti-smoking campaigns in the United States (such as the CDC’s "Tips from Former Smokers" campaign) were associated with declines in cigarette use among adults. My goal is to visualize national trends in smoking prevalence over time and highlight years when major campaigns were launched.
+
+The data I would use includes:
+- Yearly adult smoking prevalence (percentage of adults who currently smoke cigarettes)
+- Possible breakdowns by gender or age group
+
+Potential data sources:
+- Centers for Disease Control and Prevention (CDC): “Current Cigarette Smoking Among Adults in the United States”
+- National Health Interview Survey (NHIS)
+- CDC State Tobacco Activities Tracking and Evaluation (STATE) System
+
+The dataset might look like this:
+
+| Year | Smoking_Prevalence | Campaign |
+|------|--------------------|-----------|
+| 2008 | 20.6 | No |
+| 2009 | 20.1 | No |
+| 2010 | 19.5 | No |
+| 2011 | 19.0 | No |
+| 2012 | 18.0 | Yes |
+| 2013 | 17.5 | Yes |
+| 2014 | 16.8 | Yes |
+| 2015 | 15.7 | Yes |
+| 2016 | 15.5 | Yes |
+| 2017 | 14.0 | Yes |
+| 2018 | 13.7 | Yes |
+
+For this assignment, I created fake example data in a CSV file (`fake_smoking_data.csv`) that simulates this kind of information. I used it to make a ggplot showing the trend in smoking prevalence from 2008–2018, with the “Smoking Kills” campaign years highlighted.
