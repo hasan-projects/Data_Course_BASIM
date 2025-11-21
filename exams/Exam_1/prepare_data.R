@@ -53,3 +53,4 @@ df %>% ggplot(aes(x=Last_Update,y=Active)) +
   facet_wrap(~Province_State,scales = "free")
 
 df %>% glimpse
+
