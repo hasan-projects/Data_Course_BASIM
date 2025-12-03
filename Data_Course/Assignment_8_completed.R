@@ -163,5 +163,3 @@ nonlin_mod <- lm(response ~ predictor + predictor2, data = nonlin)
 
 # Look at the model results.
 summary(nonlin_mod)
-
-
