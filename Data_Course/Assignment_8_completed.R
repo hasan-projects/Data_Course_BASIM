@@ -138,7 +138,7 @@ all_preds <- bind_rows(real_df, hypo_df)
 #### Plot Real and Hypothetical Predictions ####
 
 ggplot(all_preds, aes(x = Nitrogen, y = pred, color = Type)) +
-  geom_point() +
+  geom_point() + 
   geom_point(aes(y = GrowthRate), color = "black") +
   facet_grid(Species ~ Humidity) +
   theme_minimal() +
