@@ -1,0 +1,112 @@
+---
+title: "Smoking Trends and Anti-Smoking Campaign Impact (1965–2019)"
+author: "Hasan Basim"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    theme: flatly
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+library(tidyverse)
+library(segmented)
+```
+
+# Background
+
+Smoking has long been one of the leading causes of preventable death in the United States.  
+Anti smoking campaigns ranging from televised PSAs to large scale federal interventions were created to reduce smoking prevalence.  
+This project investigates **whether major anti smoking campaigns correspond to measurable changes in national smoking rates**.
+
+Key anti smoking eras studied:
+
+- **1971:** Cigarette advertising banned on TV and radio
+- **1998:** Master Settlement Agreement (large scale changes to advertising + funded campaigns)  
+- **2012:** FDA *Tips From Former Smokers* campaign  
+
+# Data
+
+The dataset `cdc_smoking_trends_1965_2019.csv` contains annual smoking prevalence data for U.S. adults.
+
+```{r load, echo=TRUE}
+dat <- read_csv("cdc_smoking_trends_1965_2019.csv") %>%
+  mutate(
+    era = case_when(
+      year < 1971 ~ "Pre‑Ad Ban",
+      year >= 1971 & year < 1998 ~ "Post‑Ad Ban",
+      year >= 1998 & year < 2012 ~ "Post‑MSA",
+      year >= 2012 ~ "Tips Campaign Era"
+    )
+  )
+```
+
+# Exploratory Figures
+
+## Smoking prevalence over time
+```{r}
+ggplot(dat, aes(year, smoking_rate)) +
+  geom_line(size = 1.2) +
+  geom_vline(xintercept = c(1971, 1998, 2012),
+             linetype = "dashed", color = "red") +
+  labs(title = "Smoking Prevalence in the U.S. (1965–2019)",
+       y = "Smoking Rate (%)",
+       x = "Year") +
+  theme_minimal()
+```
+
+## Smoking trends by campaign era
+```{r}
+ggplot(dat, aes(year, smoking_rate, color = era)) +
+  geom_line(size = 1.2) +
+  labs(title = "Smoking Trends by Major Campaign Eras",
+       y = "Smoking Rate (%)",
+       x = "Year",
+       color = "Era") +
+  theme_minimal()
+```
+
+# Statistical Modeling
+
+## Baseline linear model
+```{r echo=TRUE}
+m1 <- lm(smoking_rate ~ year, data = dat)
+summary(m1)
+```
+
+## Segmented (Piecewise) Regression — *New Skill*
+Testing whether the slope of smoking rate decline changes around the years associated with major campaigns.
+
+```{r echo=TRUE}
+m_seg <- segmented(m1, seg.Z = ~ year, psi = c(1998, 2012))
+summary(m_seg)
+```
+
+## Plot segmented model fit
+```{r}
+plot(dat$year, dat$smoking_rate,
+     pch = 16, col = "gray40",
+     xlab = "Year", ylab = "Smoking Rate (%)",
+     main = "Segmented Regression Fit")
+
+plot(m_seg, add = TRUE, col = "blue", lwd = 2)
+abline(v = c(1998, 2012), col = "red", lty = 2)
+```
+
+# Interpretation
+
+- The slopes before and after each break point indicate how quickly smoking rates decreased in each era.
+- Large negative slope changes after 1998 or 2012 would suggest these campaigns accelerated the decline.
+
+# Conclusion
+
+- Smoking prevalence has declined substantially since 1965.  
+- Segmented regression suggests **major anti smoking interventions correspond to faster decreases in smoking rates**.  
+- Future work could incorporate advertising-spend data or examine specific demographic groups.
+
+# References
+
+- Centers for Disease Control and Prevention (CDC). Smoking Trends Data, 1965–2019.
+- Yale University. Selling Smoke: Tobacco Advertising and Anti-Smoking Campaigns.
+- PubMed. Gauging the Effect of U.S. Tobacco Control Policies From 1965 Through 2014 Using SimSmok.
